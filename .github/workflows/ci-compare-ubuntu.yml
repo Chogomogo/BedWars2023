@@ -1,36 +1,36 @@
-name: Heavy CI – GitHub Hosted
-
-on:
-  workflow_dispatch:
-
-jobs:
-  heavy-ci:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install prerequisites + JDK + Gradle
-        run: |
-          sudo apt update
-          sudo apt install -y unzip wget tar
-
-          # Install latest JDK 21 (Microsoft OpenJDK)
-          wget -O /tmp/jdk.tar.gz https://aka.ms/download-jdk/microsoft-jdk-21-linux-x64.tar.gz
-          sudo mkdir -p /opt/java/jdk21
-          sudo tar -xzf /tmp/jdk.tar.gz -C /opt/java/jdk21 --strip-components=1
-          echo "JAVA_HOME=/opt/java/jdk21" >> $GITHUB_ENV
-          echo "PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
-
-          # Install Gradle 8.4
-          wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.4-bin.zip
-          sudo unzip -d /opt/gradle /tmp/gradle.zip
-          echo "PATH=/opt/gradle/gradle-8.4/bin:$PATH" >> $GITHUB_ENV
-
-      - name: Verify installed tools
-        run: |
-          java -version
-          gradle --version
-
-      - name: Run full build
-        run: gradle clean build publishToMavenLocal javadoc --stacktrace
+#name: Heavy CI – GitHub Hosted
+#
+#on:
+#  workflow_dispatch:
+#
+#jobs:
+#  heavy-ci:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Install prerequisites + JDK + Gradle
+#        run: |
+#          sudo apt update
+#          sudo apt install -y unzip wget tar
+#
+#          # Install latest JDK 21 (Microsoft OpenJDK)
+#          wget -O /tmp/jdk.tar.gz https://aka.ms/download-jdk/microsoft-jdk-21-linux-x64.tar.gz
+#          sudo mkdir -p /opt/java/jdk21
+#          sudo tar -xzf /tmp/jdk.tar.gz -C /opt/java/jdk21 --strip-components=1
+#          echo "JAVA_HOME=/opt/java/jdk21" >> $GITHUB_ENV
+#          echo "PATH=$JAVA_HOME/bin:$PATH" >> $GITHUB_ENV
+#
+#          # Install Gradle 8.4
+#          wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.4-bin.zip
+#          sudo unzip -d /opt/gradle /tmp/gradle.zip
+#          echo "PATH=/opt/gradle/gradle-8.4/bin:$PATH" >> $GITHUB_ENV
+#
+#      - name: Verify installed tools
+#        run: |
+#          java -version
+#          gradle --version
+#
+#      - name: Run full build
+#        run: gradle clean build publishToMavenLocal javadoc --stacktrace
